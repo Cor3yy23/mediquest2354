@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+/* Reset default browser spacing */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Make the app fill the screen */
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+}
+
+/* Base body styles */
+body {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  background-color: #0b1220;
+  color: white;
+}
+
+/* Default link style */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Prevent images from overflowing containers */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
