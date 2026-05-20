@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MediQuest | Create Account</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&family=Space+Grotesk:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="auth-page">
+    <div class="background">
+      <div class="glow glow-a"></div>
+      <div class="glow glow-b"></div>
+      <div class="glow glow-c"></div>
+      <div class="noise"></div>
+    </div>
+
+    <main class="auth-layout">
+      <section class="auth-card">
+        <p class="start-screen__eyebrow">MediQuest Registration</p>
+        <h1>Create Account</h1>
+        <p class="auth-copy">Create a Parent or Child account to start tracking quests.</p>
+
+        <form id="create-form" class="auth-form">
+          <label>
+            Full Name
+            <input id="create-full-name" name="fullName" type="text" required />
+          </label>
+          <label>
+            Username
+            <input id="create-username" name="username" type="text" required />
+          </label>
+          <label>
+            Password
+            <input id="create-password" name="password" type="password" minlength="6" required />
+          </label>
+          <label>
+            Confirm Password
+            <input id="create-password-confirm" name="passwordConfirm" type="password" minlength="6" required />
+          </label>
+          <label>
+            Account Type
+            <select id="create-role" name="role" required>
+              <option value="parent">Parent account</option>
+              <option value="child">Child account</option>
+            </select>
+          </label>
+          <button class="enter-button" type="submit">Create Account</button>
+        </form>
+
+        <p class="auth-status" id="create-status"></p>
+
+        <p class="auth-link-row">
+          Already have an account?
+          <a href="signin.html">Back to Sign In</a>
+        </p>
+        <p class="auth-link-row">
+          <a href="title.html">Back to Title Screen</a>
+        </p>
+      </section>
+    </main>
+
+    <script src="auth.js"></script>
+    <script>
+      const auth = window.MediQuestAuth;
+      const form = document.getElementById("create-form");
+      const status = document.getElementById("create-status");
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const fullName = document.getElementById("create-full-name").value.trim();
+        const username = document.getElementById("create-username").value.trim();
+        const password = document.getElementById("create-password").value;
+        const passwordConfirm = document.getElementById("create-password-confirm").value;
+        const role = document.getElementById("create-role").value;
+
+        if (password !== passwordConfirm) {
+          status.textContent = "Passwords do not match.";
+          status.classList.add("is-error");
+          return;
+        }
+
+        const accounts = auth.loadAccounts();
+        const alreadyExists = accounts.some(
+          (account) => account.username.toLowerCase() === username.toLowerCase(),
+        );
+
+        if (alreadyExists) {
+          status.textContent = "That username already exists. Please choose another.";
+          status.classList.add("is-error");
+          return;
+        }
+
+        const newAccount = {
+          id: Date.now(),
+          fullName,
+          username,
+          password,
+          role,
+        };
+
+        accounts.push(newAccount);
+        auth.saveAccounts(accounts);
+        auth.saveSession({
+          username: newAccount.username,
+          fullName: newAccount.fullName,
+          role: newAccount.role,
+        });
+
+        status.textContent = "Account created! Entering MediQuest...";
+        status.classList.remove("is-error");
+
+        window.setTimeout(() => {
+          window.location.href = "index.html";
+        }, 250);
+      });
+    </script>
+  </body>
+</html>

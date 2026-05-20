@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MediQuest | Sign In</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&family=Space+Grotesk:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="auth-page">
+    <div class="background">
+      <div class="glow glow-a"></div>
+      <div class="glow glow-b"></div>
+      <div class="glow glow-c"></div>
+      <div class="noise"></div>
+    </div>
+
+    <main class="auth-layout">
+      <section class="auth-card">
+        <p class="start-screen__eyebrow">MediQuest: By North Oaks Health Systems</p>
+        <h1>Sign In</h1>
+        <p class="auth-copy">Use your account to enter the game dashboard.</p>
+
+        <form id="signin-form" class="auth-form">
+          <label>
+            Username
+            <input id="signin-username" name="username" type="text" required />
+          </label>
+          <label>
+            Password
+            <input id="signin-password" name="password" type="password" required />
+          </label>
+          <p class="auth-note">Admin account ready: <strong>admin / admin123</strong></p>
+          <button class="enter-button" type="submit">Press Enter to Start</button>
+        </form>
+
+        <p class="auth-status" id="signin-status"></p>
+
+        <p class="auth-link-row">
+          Need an account?
+          <a href="create-account.html">Create Account</a>
+        </p>
+        <p class="auth-link-row">
+          <a href="title.html">Back to Title Screen</a>
+        </p>
+      </section>
+    </main>
+
+    <script src="auth.js"></script>
+    <script>
+      const auth = window.MediQuestAuth;
+      const existingSession = auth.getSession();
+      if (existingSession) {
+        window.location.href = "index.html";
+      }
+
+      const form = document.getElementById("signin-form");
+      const status = document.getElementById("signin-status");
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const username = document.getElementById("signin-username").value.trim();
+        const password = document.getElementById("signin-password").value;
+        const accounts = auth.loadAccounts();
+        const account = accounts.find(
+          (item) => item.username.toLowerCase() === username.toLowerCase() && item.password === password,
+        );
+
+        if (!account) {
+          status.textContent = "Invalid username or password.";
+          status.classList.add("is-error");
+          return;
+        }
+
+        auth.saveSession({
+          username: account.username,
+          fullName: account.fullName,
+          role: account.role,
+        });
+
+        status.textContent = "Success! Entering MediQuest...";
+        status.classList.remove("is-error");
+        window.setTimeout(() => {
+          window.location.href = "index.html";
+        }, 250);
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MediQuest</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&family=Space+Grotesk:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="background">
+      <div class="glow glow-a"></div>
+      <div class="glow glow-b"></div>
+      <div class="glow glow-c"></div>
+      <div class="noise"></div>
+    </div>
+
+    <main class="layout">
+      <aside class="command-menu">
+        <div class="logo">
+          <img src="./images/northoaks.png" width="100"/>
+          <div>
+            <p class="logo-title">MediQuest</p>
+            <p class="logo-sub">By North Oaks Heath System</p>
+          </div>
+        </div>
+        <div class="menu-title">
+        <nav class="menu">
+          <button class="menu-item active" data-panel="home">Main Menu</button>
+          <button class="menu-item" data-panel="dashboard">Quests</button>
+          <button class="menu-item" data-panel="meds">Meds</button>
+          <button class="menu-item" data-panel="party">Party</button>
+          <button class="menu-item" data-panel="unlocks">Unlocks</button>
+          <button class="menu-item" data-panel="profile">Profile</button>
+        </nav>
+        <div class="menu-account">
+          <p class="menu-account-label">Signed in as</p>
+          <p class="menu-account-value" id="account-role">Demo User · Player account</p>
+          <button class="ghost-button menu-account-logout" id="logout-account" type="button">Log Out</button>
+        </div>
+      </aside>
+
+      <section class="panel">
+        <header class="panel-header">
+          <div>
+            <p class="panel-eyebrow">Welcome screen</p>
+            <h1 class="panel-title" id="panel-title">Main Menu</h1>
+          </div>
+          <div class="panel-actions">
+            <button class="ghost-button">Party Chat</button>
+            <button class="primary-button">Claim XP</button>
+          </div>
+        </header>
+
+        <div class="panel-content">
+          <section class="panel-section is-active" data-panel-section="home">
+            <div class="hero-card">
+              <div class="hero-copy">
+                <p class="hero-eyebrow">MediQuest</p>
+                <h2>Ready to start today&apos;s quests?</h2>
+                <p class="muted">
+                  Track doses, rally your party, and keep your streak alive with every
+                  confirmed med.
+                </p>
+                <div class="hero-actions">
+                  <button class="primary-button" data-jump="quests">View Quests</button>
+                  <button class="ghost-button" data-jump="party">View Party</button>
+                </div>
+              </div>
+              <div class="hero-panel">
+                <div>
+                  <p class="muted">Today&apos;s XP target</p>
+                  <h3>500 / 500 XP</h3>
+                </div>
+                <div class="progress">
+                  <span style="width: 64%"></span>
+                </div>
+                <div class="hero-stats">
+                  <div>
+                    <p>Streak</p>
+                    <strong>4 days</strong>
+                  </div>
+                  <div>
+                    <p>Party rank</p>
+                    <strong>Level 12</strong>
+                  </div>
+                  <div>
+                    <p>Next reward</p>
+                    <strong>+250 XP</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="hero-grid">
+              <button class="hero-tile" data-jump="meds">
+                <span>Meds</span>
+                <p>Manage today&apos;s medication list.</p>
+              </button>
+              <button class="hero-tile" data-jump="unlocks">
+                <span>Unlocks</span>
+                <p>See what rewards you earn each level.</p>
+              </button>
+              <button class="hero-tile" data-jump="profile">
+                <span>Profile</span>
+                <p>Customize how your party sees you.</p>
+              </button>
+            </div>
+          </section>
+
+          <section class="panel-section" data-panel-section="dashboard">
+            <div class="section-header">
+              <div>
+                <h2>Today&apos;s Quests</h2>
+                <p>Your medication quests show what to take, when to take it, and XP rewards.</p>
+              </div>
+            </div>
+            <div class="data-list" id="quest-list"></div>
+          </section>
+
+          <section class="panel-section" data-panel-section="quests">
+            <div class="section-header">
+              <div>
+                <h2>Quests</h2>
+                <p>Take your meds on time and claim XP rewards.</p>
+              </div>
+            </div>
+            <div class="data-list" id="quest-list"></div>
+          </section>
+
+          <section class="panel-section" data-panel-section="party">
+            <div class="section-header">
+              <div>
+                <h2>Your Party</h2>
+                <p>Invite family and keep everyone on track.</p>
+              </div>
+              <button class="primary-button" id="add-party-member">Add member</button>
+            </div>
+            <div class="form-grid">
+              <label>
+                Member name
+                <input type="text" id="party-name" placeholder="e.g. Sam Rivera" />
+              </label>
+              <label>
+                Level
+                <input type="text" id="party-level" placeholder="e.g. 7" />
+              </label>
+              <label>
+                Streak (days)
+                <input type="text" id="party-streak" placeholder="e.g. 4" />
+              </label>
+            </div>
+            <div class="data-list" id="party-list"></div>
+          </section>
+
+          <section class="panel-section" data-panel-section="meds">
+            <div class="section-header">
+              <div>
+                <h2>Medication Roster</h2>
+                <p>Track meds, XP rewards, and daily confirmations.</p>
+              </div>
+              <button class="primary-button" id="add-med">Add medication</button>
+            </div>
+            <div class="form-grid">
+              <label>
+                Medication name
+                <input type="text" id="med-name" placeholder="e.g. Metformin 500mg" />
+              </label>
+              <label>
+                Schedule
+                <input type="text" id="med-time" placeholder="e.g. 8:00 AM, 6:00 PM" />
+              </label>
+              <label>
+                XP reward
+                <input type="number" id="med-xp" min="1" value="10" />
+              </label>
+            </div>
+            <div class="data-list" id="med-list"></div>
+          </section>
+
+          <section class="panel-section" data-panel-section="unlocks">
+            <div class="section-header">
+              <div>
+                <h2>Unlocks</h2>
+                <p>Level up to unlock new medic looks and styles.</p>
+              </div>
+            </div>
+            <div class="list-section">
+              <h3>Level Rewards</h3>
+              <p class="muted" id="unlocks-next-unlock">Next unlock appears here.</p>
+              <div class="appearance-grid" id="unlocks-list"></div>
+            </div>
+          </section>
+
+          <section class="panel-section" data-panel-section="profile">
+            <div class="section-header">
+              <div>
+                <h2>Profile</h2>
+                <p>Your player identity and account progress.</p>
+              </div>
+            </div>
+
+            <div class="profile-card profile-shell" id="profile-preview">
+              <div class="profile-top-row">
+                <div class="profile-layout">
+                  <img
+                    src="./images/mediquestlogo.png"
+                    alt="User avatar"
+                    class="profile-avatar"
+                    id="profile-avatar"
+                  />
+                  <div>
+                    <h3 id="profile-display-name">Alex Rivera</h3>
+                    <p class="muted" id="profile-username">@alexr</p>
+                  </div>
+                </div>
+                <button class="primary-button" id="edit-profile" type="button">Edit Profile</button>
+              </div>
+
+              <div class="profile-meta">
+                <p><strong>Email:</strong> <span id="profile-email">alexr@mediquest.app</span></p>
+                <p><strong>Bio:</strong> <span id="profile-bio">Leveling up healthy habits one quest at a time.</span></p>
+                <p><strong>Joined:</strong> <span id="profile-joined">Jan 2026</span></p>
+              </div>
+
+              <div class="cards profile-stats" id="profile-stats">
+                <article class="card">
+                  <p class="muted">Level</p>
+                  <h3 id="stat-level">0</h3>
+                </article>
+                <article class="card">
+                  <p class="muted">Current XP</p>
+                  <h3 id="stat-xp">0</h3>
+                </article>
+                <article class="card">
+                  <p class="muted">Party Members</p>
+                  <h3 id="stat-party">0</h3>
+                </article>
+                <article class="card">
+                  <p class="muted">Meds Tracked</p>
+                  <h3 id="stat-meds">0</h3>
+                </article>
+                <article class="card">
+                  <p class="muted">Doses Logged</p>
+                  <h3 id="stat-quests">0</h3>
+                </article>
+                <article class="card">
+                  <p class="muted">Current streak</p>
+                  <h3 id="stat-streak">4 days</h3>
+                </article>
+              </div>
+            </div>
+
+            <div class="form-grid">
+              <label>
+                Display name
+                <input type="text" id="profile-name" placeholder="e.g. Alex Rivera" />
+              </label>
+              <label>
+                Username / handle
+                <input type="text" id="profile-handle" placeholder="e.g. alexr" />
+              </label>
+              <label>
+                Email address
+                <input type="email" id="profile-email-input" placeholder="e.g. alex@example.com" />
+              </label>
+              <label>
+                Bio / short description
+                <input type="text" id="profile-bio-input" placeholder="A short profile description" />
+              </label>
+              <label>
+                Join date
+                <input type="text" id="profile-joined-input" placeholder="e.g. Jan 2026" />
+              </label>
+            </div>
+          </section>
+      <footer class="xp-bar">
+        <div>
+          <p>Personal XP</p>
+          <strong id="xp-level">Level 0 · 0 / 500 XP</strong>
+        </div>
+        <div class="progress">
+          <span id="xp-progress" style="width: 0"></span>
+        </div>
+      </footer>
+    </main>
+
+    <script src="auth.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

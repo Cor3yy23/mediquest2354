@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MediQuest | Start</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="title-page">
+    <main class="title-screen persona-style">
+      <section class="title-screen__left-art" aria-label="North Oaks scenic art">
+        <img
+          class="title-screen__left-image"
+          src="images/northoaks.png"
+          alt="North Oaks campus"
+        />
+      </section>
+
+      <section class="title-screen__menu-area">
+        <p class="title-screen__kicker">By North Oaks Health Systems</p>
+        <img
+          class="title-screen__brand-image"
+          src="images/northoaks.png"
+          alt="North Oaks logo"
+        />
+        <h1 class="title-screen__logo">MEDIQUEST</h1>
+
+        <nav class="title-screen__menu" aria-label="Authentication options">
+          <a class="title-screen__menu-item is-active" href="signin.html">SIGN IN</a>
+          <a class="title-screen__menu-item" href="create-account.html">REGISTER</a>
+        </nav>
+      </section>
+    </main>
+
+    <script src="auth.js"></script>
+    <script>
+      const auth = window.MediQuestAuth;
+      const existingSession = auth.getSession();
+      if (existingSession) {
+        window.location.href = "index.html";
+      }
+    </script>
+  </body>
+</html>
